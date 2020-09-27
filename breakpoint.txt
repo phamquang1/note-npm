@@ -1,0 +1,102 @@
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #007bff;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+
+
+ng generate directive <name> [options]
+
+ng generate guard <name> [options]
+
+ng generate interceptor <name> [options]
+
+
+ng generate library <name> [options]
+
+ng generate pipe <name> [options]
+
+ng generate validator my-custom-validator
+
+
+ng generate module orders --route orders --module app.module
+
+
+@media only screen and (max-width : 739px){}
+@media only screen and (min-width : 740px) and (max-width:1023px){}
+@media only screen and (min-width : 1024px){}
+
+
+validateUserNameFromAPIDebounce(
+  control: AbstractControl
+): Observable<ValidationErrors | null> {
+  return timer(300).pipe(
+    switchMap(() =>
+      this._api.validateUsername(control.value).pipe(
+        map(isValid => {
+          if (isValid) {
+            return null;
+          }
+          return {
+            usernameDuplicated: true
+          };
+        })
+      )
+    )
+  );
+}
+
+this.registerForm = this._fb.group({
+  username: [
+    "",
+    Validators.compose([
+      Validators.required,
+      Validators.minLength(6),
+      Validators.pattern(/^[a-z]{6,32}$/i),
+    ]),
+    this.validateUserNameFromAPI.bind(this),
+  ],
+});
+
+
+// active route
+
+this.router.events.subscribe((event: RouterEvent) => {
+      const url = event.url;
+      switch (url) {
+        case '/mobile/contact/list':
+        case '/mobile/contact/message':
+          this.section = 'messages';
+          break;
+        case '/mobile/notifications':
+          this.section = 'notifications';
+          break;
+        case '/mobile/wallet':
+          this.section = 'wallet';
+          break;
+        case '/mobile/profile':
+          this.section = 'profile';
+          break;
+      }
+    });
